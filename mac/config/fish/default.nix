@@ -11,10 +11,10 @@ pkgs: {
       plan9 = ''
         # Plan 9 configuration
 
-        set --export PLAN9 ~/Desktop/System/plan9port
+        set --export PLAN9 ${pkgs.plan9port}/plan9
 
         # Use the default MacOS monospace font.
-        set --export font /mnt/font/Menlo-Regular/15a/font
+        set --export font /mnt/font/Menlo-Regular/13a/font
 
         set --export prompt \n
 
@@ -51,9 +51,9 @@ pkgs: {
         set --export --append PATH \
           '/Applications/Visual Studio Code.app/Contents/Resources/app/bin' \
           /Applications/Emacs.app/Contents/MacOS \
-          $PLAN9/bin \
           ~/go/bin \
           ${pkgs.nodePackages.tiddlywiki}/bin \
+          $PLAN9/bin \
         ;
       end
     '';

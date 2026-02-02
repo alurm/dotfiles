@@ -2,52 +2,65 @@
   inputs = {
     lsbig.url = "github:alurm/lsbig";
     json2dir.url = "github:alurm/json2dir";
-
     ki-editor.url = "github:ki-editor/ki-editor";
-    fresh.url = "github:sinelaw/fresh";
   };
-  
+
   outputs = {
     nixpkgs,
     lsbig,
     json2dir,
     ki-editor,
-    fresh,
     ...
   }: let
     system = "aarch64-darwin";
 
     pkgs = import nixpkgs {
       inherit system;
+
+      # Unfree software can be listed here.
       config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [];
     };
 
     lib = pkgs.lib;
-    enquote = lib.escapeShellArg;
-    enpath = x: enquote (builtins.concatStringsSep "/" x);
 
-    my = {
-      system-dir = [ "My" "code" ];
+    my = rec {
+      enquote = lib.escapeShellArg;
+      enpath = x: enquote (builtins.concatStringsSep "/" x);
+      system-dir = ["My" "code"];
       full-name = "Alan Urmancheev";
       email = "alan.urman@gmail.com";
       username = "alurm";
     };
-  in with my; {
-    home = import ./home.nix (my // { inherit pkgs lib enquote enpath; });
 
-    packages.${system}.default = with pkgs; symlinkJoin {
+    home = import ./home.nix (my // {inherit pkgs lib;});
+  in {
+    inherit home;
+
+    # https://nixos.org/manual/nixpkgs/stable/#sec-declarative-package-management
+    # symlinkJoin can be used instead, but it doesn't fail on duplicate paths.
+    packages.${system}.default = pkgs.buildEnv {
       name = "profile";
-      paths =
-      # Keep this in case I decide to use Emacs again.
-      # 
-      # (with emacs.pkgs; [
-      #   vterm
-      #   treesit-grammars.with-all-grammars
-      #   nix-ts-mode
-      # ]) ++
-      [
+      paths = with pkgs; [
+        # Home
+
+        # A dummy package with all the deps of home.
+        
+        (import ./packages/home.nix {inherit system pkgs home;})
+
+        # Updates home.
+
+        (import ./packages/update-home.nix {
+          inherit json2dir system writeShellApplication my;
+        })
+
+        # My software
+
         lsbig.packages.${system}.default
         json2dir.packages.${system}.default
+
+        # Scripts, wrappers
+
+        (import ./packages/my-acme.nix pkgs)
 
         # Tools
 
@@ -60,12 +73,11 @@
 
         # Text editors
 
-        ki-editor.packages.${system}.default
         helix
-        fresh
+        ki-editor.packages.${system}.default
 
         ## Used rarely or niche
-        
+
         gemini-cli
         bat
         ripgrep
@@ -78,14 +90,12 @@
         fd
         pandoc
         rclone
-        parallel
         tiddlywiki
 
         # Programming and configuration languages of sorts
 
         go
         lua5_4
-        python3
         jq
         gawk
         cue
@@ -101,10 +111,7 @@
         # Python
 
         pyright
-        (python3.withPackages (_: with _; [
-          ipython
-          requests
-        ]))
+        (python3.withPackages (_: with _; [ipython requests]))
 
         # Bash
 
@@ -117,63 +124,18 @@
         direnv
         nix-direnv
         nil
-
-        ## Don't remember which formatter is better, add both.
-
-        nixfmt-rfc-style
+        # Seems to be better to me than nixfmt-rfc-style.
         alejandra
 
         # JavaScript
 
         prettier
 
-        # Etcetera
-
-        (writeShellApplication {
-          name = "nix-update-managed-files";
-          text = ''
-            cd ~
-
-            # --quiet --quiet removes warnings for uncommited changes.
-            # I do not find them to be useful.
-            nix eval ~/${enpath system-dir}/nix/mac#home --json --quiet --quiet "$@" |
-            ${json2dir.packages.${system}.default}/bin/json2dir
-          '';
-        })
-
-      	# Keep TiddlyWiki stuff here for now in case I decide to use it again.
-      	# 
-        # HACK: these seemingly need to be in the store by TiddlyWiki service installed via json2dir.
-        # Ideally, this shouldn't be required.
-        # nodePackages.tiddlywiki
-
-        # Keep this in case I decide to use Neovim.
-        # 
-        # (writeShellApplication {
-        #   name = "o";
-        #   text = ''
-        #     exec open -a neovide "$@"
-        #   '';
-        # })
-
-        # Keep this in case I decide to use Acme.
-        # 
-        # This one is a bit complex but let's keep it this way for now.
-        # (writeShellApplication {
-        #   name = "my-acme";
-        #   text = ''
-        #     PAGER=cat \
-        #     SHELL=rc \
-        #     EDITOR=E \
-        #     TERM=dumb \
-        #     NO_COLOR=1 \
-        #     prompt=$'\n' \
-        #     exec \
-        #     acme \
-        #     -a \
-        #     "$@"
-        #   '';
-        # })
+        # Emacs
+        #
+        # emacs.pkgs.vterm
+        # emacs.pkgs.treesit-grammars.with-all-grammars
+        # emacs.pkgs.nix-ts-mode
       ];
     };
   };

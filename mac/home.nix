@@ -1,17 +1,12 @@
 my @ {
-  pkgs,
+  # pkgs,
   lib,
-  enquote,
-  enpath,
-  
-  username,
-  full-name,
-  email,
-  system-dir,
+
+  ...
 }: builtins.foldl' lib.recursiveUpdate {} [
   (
     lib.setAttrByPath (
-      system-dir ++ [ "plan9port" "mac" "9term.app" "Contents" "MacOS" "9term" ]
+      my.system-dir ++ [ "plan9port" "mac" "9term.app" "Contents" "MacOS" "9term" ]
     ) [ "script" ''
       #!/usr/bin/env -S ''${SHELL} -l
       export NO_COLOR=1
@@ -22,7 +17,7 @@ my @ {
       exec \
       open \
       -a \
-      /Users/${enquote username}/${enpath system-dir}/plan9port/bin/9term \
+      /Users/${my.enquote my.username}/${my.enpath my.system-dir}/plan9port/bin/9term \
       --args \
       rc \
       -l \
@@ -40,7 +35,7 @@ my @ {
       LaunchAgents = let
         # Seems like these have to be loaded manually once afterwards.
         # launchctl load ~/Library/LaunchAgents/...
-        make-service = { name, script }: {
+        _make-service = { name, script }: {
           "${name}.plist" = ''
             <?xml version="1.0" encoding="utf-8"?>
             <plist version="1.0">
