@@ -1,8 +1,8 @@
-theme = "vim_dark_high_contrast"
+theme = "acme"
 
 [editor]
 auto-pairs = true
-insert-final-newline = false
+insert-final-newline = true
 gutters = ["diff"]
 
 [editor.file-picker]
