@@ -1,6 +1,9 @@
 [language-server.rust-analyzer.config]
 check.command = "clippy"
 
+[language-server.ty]
+config.experimental.rename = true
+
 [[language]]
 name = "nix"
 formatter = { command = "alejandra" }
