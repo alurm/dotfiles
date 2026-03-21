@@ -1,6 +1,10 @@
 [language-server.rust-analyzer.config]
 check.command = "clippy"
 
+[[language]]
+name = "python"
+auto-format = true
+
 [language-server.ty]
 config.experimental.rename = true
 
