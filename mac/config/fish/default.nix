@@ -1,7 +1,11 @@
 pkgs: {
   functions."fish_prompt.fish" = ''
     function fish_prompt
-      printf ' %s: ' (pwd)
+      printf '\n\n'
+    end
+
+    # MacOS already does a good enough job.
+    function fish_title
     end
   '';
 

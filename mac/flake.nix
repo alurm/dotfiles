@@ -41,28 +41,26 @@
     packages.${system}.default = pkgs.buildEnv {
       name = "profile";
       paths = with pkgs; [
-        # Home
-
-        # A dummy package with all the deps of home.
+        # A dummy package to install all the deps of home.
         
         (import ./packages/home.nix {inherit system pkgs home;})
 
-        # Updates home.
+        # Applies dotfiles.
 
-        (import ./packages/update-home.nix {
+        (import ./packages/apply-dotfiles.nix {
           inherit json2dir system writeShellApplication my;
         })
 
-        # My software
+        # My software.
 
         lsbig.packages.${system}.default
         json2dir.packages.${system}.default
 
-        # Scripts, wrappers
+        # Scripts, wrappers.
 
         (import ./packages/my-acme.nix pkgs)
 
-        # Tools
+        # Tools.
 
         jujutsu
         atool
@@ -71,12 +69,12 @@
         ffmpeg
         yt-dlp
 
-        # Text editors
+        # Text editors.
 
         helix
         ki-editor.packages.${system}.default
 
-        ## Used rarely or niche
+        # Used rarely or niche.
 
         gemini-cli
         bat
@@ -92,7 +90,7 @@
         rclone
         tiddlywiki
 
-        # Programming and configuration languages of sorts
+        # Programming and configuration languages of sorts.
 
         go
         lua5_4
@@ -103,23 +101,23 @@
         ghostscript
         nodejs
 
-        # Zig
+        # Zig.
 
         zig
         zls
 
-        # Python
+        # Python.
 
         pyright
         (python3.withPackages (_: with _; [ipython requests]))
 
-        # Bash
+        # Bash.
 
         bash-language-server
         shfmt
         shellcheck
 
-        # Nix
+        # Nix.
 
         direnv
         nix-direnv
@@ -127,11 +125,11 @@
         # Seems to be better to me than nixfmt-rfc-style.
         alejandra
 
-        # JavaScript
-
+        # JavaScript.
+        
         prettier
 
-        # Emacs
+        # Emacs.
         #
         # emacs.pkgs.vterm
         # emacs.pkgs.treesit-grammars.with-all-grammars
