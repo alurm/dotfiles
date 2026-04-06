@@ -67,12 +67,13 @@
         rlwrap
         git
         ffmpeg
-        yt-dlp
+        yt-dlp-light
 
         # Text editors.
 
         helix
         ki-editor.packages.${system}.default
+        neovim
 
         # Used rarely or niche.
 

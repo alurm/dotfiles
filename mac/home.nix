@@ -74,7 +74,7 @@ my @ {
         #   script = ''
         #     cd ~/Desktop/Syncthing/TiddlyWikis/Main &&
         #     exec \
-        #     ${pkgs.nodePackages.tiddlywiki}/bin/tiddlywiki \
+        #     ${pkgs.tiddlywiki}/bin/tiddlywiki \
         #     --listen port=8080 host=127.0.0.1
         #   '';
         # }

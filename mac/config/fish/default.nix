@@ -55,7 +55,7 @@ pkgs: {
           '/Applications/Visual Studio Code.app/Contents/Resources/app/bin' \
           /Applications/Emacs.app/Contents/MacOS \
           ~/go/bin \
-          ${pkgs.nodePackages.tiddlywiki}/bin \
+          ${pkgs.tiddlywiki}/bin \
           $PLAN9/bin \
         ;
       end
