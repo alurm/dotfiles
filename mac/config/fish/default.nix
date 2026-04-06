@@ -1,8 +1,7 @@
 pkgs: {
   functions."fish_prompt.fish" = ''
     function fish_prompt
-      echo
-      echo
+      printf ' %s: ' (pwd)
     end
   '';
 
