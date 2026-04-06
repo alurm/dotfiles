@@ -18,7 +18,7 @@
       inherit system;
 
       # Unfree software can be listed here.
-      config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [];
+      config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) ["claude-code"];
     };
 
     lib = pkgs.lib;
@@ -68,15 +68,30 @@
         git
         ffmpeg
         yt-dlp-light
+        claude-code
 
         # Text editors.
 
         helix
         ki-editor.packages.${system}.default
-        neovim
+
+        # Neovim.
+
+        (neovim.override {
+          configure.packages.plugins = with pkgs.vimPlugins; {
+            start = [
+              nvim-treesitter.withAllGrammars
+              telescope-nvim
+              nvim-lspconfig
+            ];
+          };
+        })
 
         # Used rarely or niche.
 
+        tmux
+        nushell
+        caddy
         gemini-cli
         bat
         ripgrep
@@ -90,10 +105,10 @@
         pandoc
         rclone
         tiddlywiki
+        xz
 
         # Programming and configuration languages of sorts.
 
-        go
         lua5_4
         jq
         gawk
@@ -102,6 +117,11 @@
         ghostscript
         nodejs
 
+        # Go.
+
+        go
+        gopls
+
         # Zig.
 
         zig
@@ -109,8 +129,11 @@
 
         # Python.
 
+        python3
         pyright
-        (python3.withPackages (_: with _; [ipython requests]))
+        ruff
+        ty
+        uv
 
         # Bash.
 
@@ -123,12 +146,18 @@
         direnv
         nix-direnv
         nil
-        # Seems to be better to me than nixfmt-rfc-style.
+        nix-tree
+
+        ## Seems to be better to me than nixfmt-rfc-style.
+        
         alejandra
 
-        # JavaScript.
+        # Web, JavaScript, TypeScript.
         
         prettier
+        typescript
+        typescript-language-server
+        vscode-langservers-extracted
 
         # Emacs.
         #
