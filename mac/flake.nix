@@ -26,7 +26,7 @@
     my = rec {
       enquote = lib.escapeShellArg;
       enpath = x: enquote (builtins.concatStringsSep "/" x);
-      system-dir = ["My" "code"];
+      system-dir = ["My" "Code"];
       full-name = "Alan Urmancheev";
       email = "alan.urman@gmail.com";
       username = "alurm";
