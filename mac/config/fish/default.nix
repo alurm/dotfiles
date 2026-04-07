@@ -42,7 +42,9 @@ pkgs: {
         # To-do: should this be set somehow differently?
         set --export fish_greeting '''
 
-        set --export EDITOR hx
+        # Like Neovim, but reuses the same instance if possible.
+        # Also waits for a buffer to be deleted.
+        set --export EDITOR 'nvr --remote-wait'
 
         ${ki-editor}
 

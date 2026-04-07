@@ -72,18 +72,24 @@
 
         # Text editors.
 
-        helix
+        # helix
         ki-editor.packages.${system}.default
 
         # Neovim.
 
         (neovim.override {
-          configure.packages.plugins = with pkgs.vimPlugins; {
-            start = [
-              nvim-treesitter.withAllGrammars
-              telescope-nvim
-              nvim-lspconfig
-            ];
+          configure = {
+            customRC = ''
+              luafile ~/.config/nvim/init.lua
+            '';
+            packages.plugins = with pkgs.vimPlugins; {
+              start = [
+                nvim-treesitter.withAllGrammars
+                telescope-nvim
+                nvim-lspconfig
+                oil-nvim
+              ];
+            };
           };
         })
 
