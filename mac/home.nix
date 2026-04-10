@@ -93,7 +93,7 @@ my @ {
 
         macos-option-as-alt = true
 
-        theme = Dark+
+        # theme = Dark+
       '';
     };
 

@@ -1,9 +1,8 @@
 theme = "github_light"
 
 [editor]
-auto-pairs = true
-insert-final-newline = true
 gutters = ["diff"]
+bufferline = "always"
 
 [editor.file-picker]
 hidden = false
