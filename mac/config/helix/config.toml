@@ -1,11 +1,12 @@
 theme = "github_light"
 
 [editor]
-gutters = ["diff"]
+gutters = ["diagnostics", "diff"]
 bufferline = "always"
 
 [editor.file-picker]
 hidden = false
+follow-symlinks = false
 
 [editor.soft-wrap]
 enable = true
