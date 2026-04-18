@@ -1,28 +1,31 @@
 my @ {
   # pkgs,
   lib,
-
   ...
-}: builtins.foldl' lib.recursiveUpdate {} [
+}:
+builtins.foldl' lib.recursiveUpdate {} [
   (
     lib.setAttrByPath (
-      my.system-dir ++ [ "plan9port" "mac" "9term.app" "Contents" "MacOS" "9term" ]
-    ) [ "script" ''
-      #!/usr/bin/env -S ''${SHELL} -l
-      export NO_COLOR=1
-      export PAGER=cat
+      my.system-dir ++ ["plan9port" "mac" "9term.app" "Contents" "MacOS" "9term"]
+    ) [
+      "script"
+      ''
+        #!/usr/bin/env -S ''${SHELL} -l
+        export NO_COLOR=1
+        export PAGER=cat
 
-      # I haven't found a saner way to do this without using "open".
-      # Without having trouble with permissions, that is.
-      exec \
-      open \
-      -a \
-      /Users/${my.enquote my.username}/${my.enpath my.system-dir}/plan9port/bin/9term \
-      --args \
-      rc \
-      -l \
-      ;
-    '' ]
+        # I haven't found a saner way to do this without using "open".
+        # Without having trouble with permissions, that is.
+        exec \
+        open \
+        -a \
+        /Users/${my.enquote my.username}/${my.enpath my.system-dir}/plan9port/bin/9term \
+        --args \
+        rc \
+        -l \
+        ;
+      ''
+    ]
   )
   {
     lib.profile = ''
@@ -32,34 +35,38 @@ my @ {
     '';
 
     Library = {
-      LaunchAgents = let
-        # Seems like these have to be loaded manually once afterwards.
-        # launchctl load ~/Library/LaunchAgents/...
-        _make-service = { name, script }: {
-          "${name}.plist" = ''
-            <?xml version="1.0" encoding="utf-8"?>
-            <plist version="1.0">
-              <dict>
-                <key>Label</key>
-                <string>${lib.escapeXML name}</string>
+      LaunchAgents =
+        let
+          # Seems like these have to be loaded manually once afterwards.
+          # launchctl load ~/Library/LaunchAgents/...
+          _make-service = {
+            name,
+            script,
+          }: {
+            "${name}.plist" = ''
+              <?xml version="1.0" encoding="utf-8"?>
+              <plist version="1.0">
+                <dict>
+                  <key>Label</key>
+                  <string>${lib.escapeXML name}</string>
 
-                <key>KeepAlive</key>
-                <true/>
+                  <key>KeepAlive</key>
+                  <true/>
 
-                <key>ProgramArguments</key>
-                <array>
-                  <string>/usr/local/bin/fish</string>
-                  <string>-l</string>
-                  <string>-c</string>
-                  <string>
-                    ${lib.escapeXML script}
-                  </string>
-                </array>
-              </dict>
-            </plist>
-          '';
-        };
-      in {}
+                  <key>ProgramArguments</key>
+                  <array>
+                    <string>/usr/local/bin/fish</string>
+                    <string>-l</string>
+                    <string>-c</string>
+                    <string>
+                      ${lib.escapeXML script}
+                    </string>
+                  </array>
+                </dict>
+              </plist>
+            '';
+          };
+        in {}
         # Keep these for now in case I want them back.
         #
         # // make-service {
@@ -78,7 +85,7 @@ my @ {
         #     --listen port=8080 host=127.0.0.1
         #   '';
         # }
-      ;
+        ;
 
       # Keep this for now in case I want to use Ghostty again.
       "Application Support"."com.mitchellh.ghostty".config = ''

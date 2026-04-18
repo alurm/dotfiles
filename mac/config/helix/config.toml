@@ -3,6 +3,7 @@ theme = "github_light"
 [editor]
 gutters = ["diagnostics", "diff"]
 bufferline = "always"
+default-yank-register = "+"
 
 [editor.file-picker]
 hidden = false

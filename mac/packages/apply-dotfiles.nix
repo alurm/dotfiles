@@ -1,4 +1,10 @@
-{ json2dir, system, writeShellApplication, my }: writeShellApplication {
+{
+  json2dir,
+  system,
+  writeShellApplication,
+  my,
+}:
+writeShellApplication {
   name = "apply-dotfiles";
   text = ''
     cd ~

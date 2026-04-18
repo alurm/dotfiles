@@ -1,8 +1,7 @@
 let
   full-name = "Alan Urmancheev";
   email = "alan.urman@gmail.com";
-in
-{
+in {
   ".config" = {
     git.config = ''
       [init]

@@ -3,13 +3,11 @@
   lib,
   enquote,
   enpath,
-
   username,
   full-name,
   email,
   system-dir,
-}:
-{
+}: {
   # Keep this in case I want to use Neovim.
   nvim."init.lua" = builtins.readFile ./neovim/init.lua;
 

@@ -26,7 +26,8 @@
     my = rec {
       enquote = lib.escapeShellArg;
       enpath = x: enquote (builtins.concatStringsSep "/" x);
-      system-dir = ["My" "Code"];
+      # Location of the "system directory" relative to ~.
+      system-dir = ["Code"];
       full-name = "Alan Urmancheev";
       email = "alan.urman@gmail.com";
       username = "alurm";
@@ -42,13 +43,18 @@
       name = "profile";
       paths = with pkgs; [
         # A dummy package to install all the deps of home.
-        
+
         (import ./packages/home.nix {inherit system pkgs home;})
 
         # Applies dotfiles.
 
         (import ./packages/apply-dotfiles.nix {
-          inherit json2dir system writeShellApplication my;
+          inherit
+            json2dir
+            system
+            writeShellApplication
+            my
+            ;
         })
 
         # My software.
@@ -65,10 +71,19 @@
         jujutsu
         atool
         rlwrap
-        git
         ffmpeg
         yt-dlp-light
         claude-code
+
+        # Lol. Lmao, even.
+        #
+        # https://access.redhat.com/security/cve/cve-2025-41390
+        (pkgs.writeShellApplication {
+          name = "git";
+          text = ''
+            exec ${pkgs.git}/bin/git -c core.fsmonitor=false "$@"
+          '';
+        })
 
         # Text editors.
 
@@ -155,11 +170,11 @@
         nix-tree
 
         ## Seems to be better to me than nixfmt-rfc-style.
-        
+
         alejandra
 
         # Web, JavaScript, TypeScript.
-        
+
         prettier
         typescript
         typescript-language-server

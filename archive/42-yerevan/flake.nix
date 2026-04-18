@@ -2,37 +2,29 @@
   inputs.lsbig.url = "github:alurm/lsbig";
   inputs.json2dir.url = "github:alurm/json2dir";
 
-  outputs =
-    {
-      nixpkgs,
-      flake-utils,
-      lsbig,
-      json2dir,
-      home-manager,
-      ...
-    }:
+  outputs = {
+    nixpkgs,
+    flake-utils,
+    lsbig,
+    json2dir,
+    home-manager,
+    ...
+  }:
     flake-utils.lib.eachDefaultSystem (
-      system:
-      let
+      system: let
         pkgs = nixpkgs.legacyPackages.${system};
-      in
-      {
+      in {
         packages = {
+          m3 = pkgs.symlinkJoin {
+            name = "profile";
 
-m3 = pkgs.symlinkJoin {
-
-name = "profile";
-
-paths = with pkgs; [
-
-lsbig.packages.${system}.default
-json2dir.packages.${system}.default
-helix
-fish
-
-];
-
-};
+            paths = with pkgs; [
+              lsbig.packages.${system}.default
+              json2dir.packages.${system}.default
+              helix
+              fish
+            ];
+          };
 
           fourty-two = pkgs.symlinkJoin {
             name = "my-profile";
