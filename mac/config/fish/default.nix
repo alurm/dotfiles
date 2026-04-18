@@ -1,7 +1,11 @@
 pkgs: {
   functions."fish_prompt.fish" = ''
     function fish_prompt
-      printf '\n\n'
+      # `\n\n` is nice, but interacts badly with less.
+      # Less shows a `:` prompt.
+      # After pressing `q`, a newline is printed which causes text to go up, which is annoying.
+      # So let's try using just `$ `.
+      printf '$ '
     end
 
     # MacOS already does a good enough job.
