@@ -35,6 +35,18 @@ pkgs: {
 
       # End of Ki Editor configuration
     '';
+
+    python = let
+      version = ({
+        major,
+        minor,
+        ...
+      }: "${major}.${minor}")
+      pkgs.python3.sourceVersion;
+    in ''
+      # Allow installation of packages via `nix profile add`.
+      set --export PYTHONPATH ~/.nix-profile/lib/python${version}/site-packages
+    '';
   in ''
     if status is-login
       # To-do: should this be set somehow differently?
@@ -54,6 +66,8 @@ pkgs: {
       direnv hook fish | source
 
       ${plan9}
+
+      ${python}
 
       # Usually not needed, but somehow Zed doesn't this one unless set here.
       set --export --prepend PATH ~/.nix-profile/bin
