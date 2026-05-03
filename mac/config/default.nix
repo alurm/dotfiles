@@ -11,6 +11,13 @@
   # Keep this in case I want to use Neovim.
   nvim."init.lua" = builtins.readFile ./neovim/init.lua;
 
+  yamlfmt.".yamlfmt" = ''
+    formatter:
+      type: basic
+      indentless_arrays: true
+      retain_line_breaks: true
+  '';
+
   # Keep this in case I want to use Emacs.
   emacs."init.el" = builtins.readFile ./emacs/init.el;
 
