@@ -52,6 +52,9 @@ pkgs: {
       # To-do: should this be set somehow differently?
       set --export fish_greeting '''
 
+      # Disable echoing of ^D, ^C, and other control characters.
+      stty -echoctl
+
       # # Like Neovim, but reuses the same instance if possible.
       # # Also waits for a buffer to be deleted.
       # set --export EDITOR 'nvr --remote-wait'
