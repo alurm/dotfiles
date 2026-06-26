@@ -1,7 +1,13 @@
 {
   inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+
     lsbig.url = "github:alurm/lsbig";
+    lsbig.inputs.nixpkgs.follows = "nixpkgs";
+
     json2dir.url = "github:alurm/json2dir";
+    json2dir.inputs.nixpkgs.follows = "nixpkgs";
+
     ki-editor.url = "github:ki-editor/ki-editor";
   };
 
@@ -72,6 +78,7 @@
         atool
         rlwrap
         ffmpeg
+        typst
         yt-dlp-light
         claude-code
 
