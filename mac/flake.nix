@@ -6,16 +6,14 @@
     lsbig.inputs.nixpkgs.follows = "nixpkgs";
 
     json2dir.url = "github:alurm/json2dir";
-    json2dir.inputs.nixpkgs.follows = "nixpkgs";
-
-    ki-editor.url = "github:ki-editor/ki-editor";
+    # Not used to use Cachix.
+    # json2dir.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
     nixpkgs,
     lsbig,
     json2dir,
-    ki-editor,
     ...
   }: let
     system = "aarch64-darwin";
@@ -94,8 +92,7 @@
 
         # Text editors.
 
-        # helix
-        ki-editor.packages.${system}.default
+        helix
 
         # Neovim.
 
@@ -135,7 +132,7 @@
         tiddlywiki
         xz
 
-        # Programming and configuration languages of sorts.
+        # Programming and configuration languages.
 
         lua5_4
         jq
