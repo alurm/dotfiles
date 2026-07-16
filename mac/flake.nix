@@ -8,12 +8,17 @@
     json2dir.url = "github:alurm/json2dir";
     # Not used to use Cachix.
     # json2dir.inputs.nixpkgs.follows = "nixpkgs";
+
+    # jj fork with colocated worktrees.
+    # https://github.com/jj-vcs/jj/pull/8667 plus CLI changes.
+    jj.url = "github:alurm/jj?ref=codex/workspace-cli-sync-head";
   };
 
   outputs = {
     nixpkgs,
     lsbig,
     json2dir,
+    jj,
     ...
   }: let
     system = "aarch64-darwin";
@@ -72,7 +77,9 @@
 
         # Tools.
 
-        jujutsu
+        # jujutsu
+        jj.packages.${system}.default
+
         atool
         rlwrap
         ffmpeg

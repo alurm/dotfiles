@@ -19,7 +19,7 @@
   '';
 
   # Keep this in case I want to use Emacs.
-  emacs."init.el" = builtins.readFile ./emacs/init.el;
+  # emacs."init.el" = builtins.readFile ./emacs/init.el;
 
   wezterm."wezterm.lua" = builtins.readFile ./wezterm/wezterm.lua;
 
@@ -53,6 +53,7 @@
     [ui]
     diff-editor = ":builtin"
     default-command = ["log", "-r", "all()"]
+    pager = ["less", "-FR"]
 
     [git]
     colocate = true
