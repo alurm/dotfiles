@@ -57,6 +57,9 @@
 
     [git]
     colocate = true
+
+    [aliases]
+    init = ["git", "init"]
   '';
 
   helix = {
