@@ -52,11 +52,7 @@
 
     [ui]
     diff-editor = ":builtin"
-    default-command = ["log", "-r", "all()"]
     pager = ["less", "-FR"]
-
-    [git]
-    colocate = true
 
     [aliases]
     init = ["git", "init"]
