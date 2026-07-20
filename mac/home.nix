@@ -116,7 +116,7 @@ builtins.foldl' lib.recursiveUpdate {} [
 
       If a repository has no `AGENTS.md` but has a `CLAUDE.md`, read `CLAUDE.md` as repository guidance.
 
-      Repository-specific guidance takes precedence.
+      Do not push commits or create issues or pull requests without explicit approval. Treat tentative language as discussion, not authorization; if unsure, ask first.
     '';
 
     ".config" = import ./config my;
