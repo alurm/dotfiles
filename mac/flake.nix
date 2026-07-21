@@ -32,17 +32,18 @@
 
     lib = pkgs.lib;
 
-    my = rec {
+    info = let
       enquote = lib.escapeShellArg;
+    in {
+      inherit enquote;
       enpath = x: enquote (builtins.concatStringsSep "/" x);
-      # Location of the "system directory" relative to ~.
-      system-dir = ["Code"];
+      system-dir = ["Code"]; # Location of the "system directory" relative to home directory.
       full-name = "Alan Urmancheev";
       email = "alan.urman@gmail.com";
       username = "alurm";
     };
 
-    home = import ./home.nix (my // {inherit pkgs lib;});
+    home = import ./home (info // {inherit pkgs lib;});
   in {
     inherit home;
 
@@ -62,8 +63,8 @@
             json2dir
             system
             writeShellApplication
-            my
-            ;
+
+            ;my = info;
         })
 
         # My software.
