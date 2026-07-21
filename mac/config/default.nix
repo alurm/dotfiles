@@ -63,6 +63,10 @@
     "languages.toml" = builtins.readFile ./helix/languages.toml;
   };
 
+  sqlite3.sqliterc = ''
+    .mode box
+  '';
+
   # Keep this for now in case I want to use Ghostty again.
   ghostty.config = builtins.readFile ./ghostty/config;
 }

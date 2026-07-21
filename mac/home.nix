@@ -83,10 +83,6 @@ builtins.foldl' lib.recursiveUpdate {} [
         ;
     };
 
-    ".sqliterc" = ''
-      .mode box
-    '';
-
     # Suppresses the login message in new terminal sessions.
     ".hushlogin" = "";
 
