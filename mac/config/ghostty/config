@@ -1,0 +1,12 @@
+cursor-style = bar
+
+cursor-style-blink = false
+
+shell-integration-features = no-cursor
+
+# It's not obvious how to do maximized properly at the moment.
+window-save-state = always
+
+macos-option-as-alt = true
+
+# theme = Dark+

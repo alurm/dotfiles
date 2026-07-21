@@ -62,4 +62,7 @@
     "config.toml" = builtins.readFile ./helix/config.toml;
     "languages.toml" = builtins.readFile ./helix/languages.toml;
   };
+
+  # Keep this for now in case I want to use Ghostty again.
+  ghostty.config = builtins.readFile ./ghostty/config;
 }

@@ -81,22 +81,6 @@ builtins.foldl' lib.recursiveUpdate {} [
         #   '';
         # }
         ;
-
-      # Keep this for now in case I want to use Ghostty again.
-      "Application Support"."com.mitchellh.ghostty".config = ''
-        cursor-style = bar
-
-        cursor-style-blink = false
-
-        shell-integration-features = no-cursor
-
-        # It's not obvious how to do maximized properly at the moment.
-        window-save-state = always
-
-        macos-option-as-alt = true
-
-        # theme = Dark+
-      '';
     };
 
     ".sqliterc" = ''
