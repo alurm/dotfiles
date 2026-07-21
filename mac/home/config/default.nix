@@ -49,6 +49,7 @@
     [ui]
     diff-editor = ":builtin"
     pager = ["less", "-FR"]
+    default-command = "log"
 
     [aliases]
     init = ["git", "init"]
