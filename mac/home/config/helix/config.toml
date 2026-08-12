@@ -3,7 +3,6 @@ theme = "fleet_dark"
 [editor]
 gutters = ["diagnostics", "diff"]
 bufferline = "always"
-default-yank-register = "+"
 
 [editor.file-picker]
 hidden = false
