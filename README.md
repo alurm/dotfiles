@@ -1,1 +1,1 @@
-Configuration for my computers.
+Configuration for computers.
